@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up | Micro-Mentor</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<script src="https://sites.super.myninja.ai/_assets/ninja-daytona-script.js"></script>
+</head>
+<body data-page="signup" class="auth-page">
+    <div class="auth-container">
+        <div class="auth-card">
+            <a href="index.html" class="back-link">← Back to home</a>
+            
+            <span class="auth-label">Create Account</span>
+            <h1 class="auth-title">Get started.</h1>
+            
+            <button class="btn btn-linkedin" onclick="Auth.linkedinAuth()">
+                <svg class="linkedin-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+                </svg>
+                Continue with LinkedIn
+            </button>
+            
+            <div class="divider">
+                <span>or create an account with email</span>
+            </div>
+            
+            <form class="auth-form" id="signupForm" onsubmit="handleSignup(event)">
+                <div class="form-group">
+                    <label for="name">Full Name</label>
+                    <input type="text" id="name" name="name" placeholder="John Doe" required>
+                    <span class="form-error" id="nameError"></span>
+                </div>
+                
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" name="email" placeholder="you@company.com" required>
+                    <span class="form-error" id="emailError"></span>
+                </div>
+                
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" name="password" placeholder="Create a password (min 6 characters)" required>
+                    <span class="form-error" id="passwordError"></span>
+                </div>
+                
+                <div class="form-group">
+                    <label for="role">I want to</label>
+                    <select id="role" name="role">
+                        <option value="mentee">Mentee - Learn from experts</option>
+                        <option value="mentor">Mentor - Share my expertise</option>
+                    </select>
+                </div>
+                
+                <button type="submit" class="btn btn-primary btn-full" id="signupBtn">
+                    <span class="btn-text">Create Account</span>
+                    <span class="spinner" style="display: none;"></span>
+                </button>
+            </form>
+            
+            <p class="auth-footer">
+                Already have an account? <a href="login.html">Login</a>
+            </p>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+    <script>
+        function handleSignup(e) {
+            e.preventDefault();
+            
+            const name = document.getElementById('name').value.trim();
+            const email = document.getElementById('email').value.trim();
+            const password = document.getElementById('password').value;
+            const role = document.getElementById('role').value;
+            const btn = document.getElementById('signupBtn');
+            const btnText = btn.querySelector('.btn-text');
+            const spinner = btn.querySelector('.spinner');
+            
+            // Clear previous errors
+            document.querySelectorAll('.form-error').forEach(el => el.textContent = '');
+            document.querySelectorAll('input').forEach(el => el.classList.remove('error'));
+            
+            // Validate
+            let hasError = false;
+            
+            if (name.length < 2) {
+                document.getElementById('nameError').textContent = 'Please enter your full name';
+                document.getElementById('name').classList.add('error');
+                hasError = true;
+            }
+            
+            if (!Auth.validateEmail(email)) {
+                document.getElementById('emailError').textContent = 'Please enter a valid email address';
+                document.getElementById('email').classList.add('error');
+                hasError = true;
+            }
+            
+            if (password.length < 6) {
+                document.getElementById('passwordError').textContent = 'Password must be at least 6 characters';
+                document.getElementById('password').classList.add('error');
+                hasError = true;
+            }
+            
+            if (hasError) return;
+            
+            // Show loading
+            btnText.textContent = 'Creating account...';
+            spinner.style.display = 'inline-block';
+            btn.disabled = true;
+            
+            // Simulate API call
+            setTimeout(() => {
+                const success = Auth.signup(name, email, password, role);
+                
+                if (success) {
+                    setTimeout(() => {
+                        window.location.href = 'dashboard.html';
+                    }, 1000);
+                } else {
+                    btnText.textContent = 'Create Account';
+                    spinner.style.display = 'none';
+                    btn.disabled = false;
+                }
+            }, 1000);
+        }
+    </script>
+</body>
+</html>

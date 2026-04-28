@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Find Mentors | Micro-Mentor</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<script src="https://sites.super.myninja.ai/_assets/ninja-daytona-script.js"></script>
+</head>
+<body data-page="mentors">
+    <div class="dashboard-layout">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="sidebar-logo">
+                <div class="logo-icon" style="width: 32px; height: 32px;"></div>
+                <span class="logo-name">Micro-Mentor</span>
+            </div>
+            
+            <nav class="sidebar-nav">
+                <a href="dashboard.html" class="nav-item">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <rect x="3" y="3" width="7" height="7"></rect>
+                        <rect x="14" y="3" width="7" height="7"></rect>
+                        <rect x="14" y="14" width="7" height="7"></rect>
+                        <rect x="3" y="14" width="7" height="7"></rect>
+                    </svg>
+                    Dashboard
+                </a>
+                <a href="chats.html" class="nav-item">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+                    </svg>
+                    My Chats
+                </a>
+                <a href="mentors.html" class="nav-item active">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                        <circle cx="9" cy="7" r="4"></circle>
+                        <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                        <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                    </svg>
+                    Find Mentors
+                </a>
+                <a href="profile.html" class="nav-item">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                        <circle cx="12" cy="7" r="4"></circle>
+                    </svg>
+                    Profile
+                </a>
+            </nav>
+            
+            <div class="sidebar-footer">
+                <button class="nav-item" onclick="App.logout()">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
+                        <polyline points="16 17 21 12 16 7"></polyline>
+                        <line x1="21" y1="12" x2="9" y2="12"></line>
+                    </svg>
+                    Logout
+                </button>
+            </div>
+        </aside>
+        
+        <!-- Main Content -->
+        <main class="dashboard-content">
+            <div class="dashboard-header">
+                <h1 class="dashboard-title">Find Mentors</h1>
+                <p class="dashboard-subtitle">Connect with experienced professionals ready to help you grow.</p>
+            </div>
+            
+            <!-- Search & Filter -->
+            <div class="info-card" style="margin-bottom: 24px;">
+                <div style="display: flex; gap: 16px; flex-wrap: wrap;">
+                    <input type="text" id="searchMentors" placeholder="Search by name or expertise..." class="chat-input" style="flex: 1; min-width: 200px;" onkeyup="filterMentors()">
+                    <select id="filterExpertise" class="chat-input" style="min-width: 150px;" onchange="filterMentors()">
+                        <option value="">All Expertise</option>
+                        <option value="ux">UX Design</option>
+                        <option value="react">React</option>
+                        <option value="leadership">Leadership</option>
+                        <option value="startups">Startups</option>
+                    </select>
+                </div>
+            </div>
+            
+            <!-- Mentors Grid -->
+            <div class="mentors-grid" id="allMentorsGrid">
+                <!-- Populated by JavaScript -->
+            </div>
+        </main>
+    </div>
+
+    <script src="app.js"></script>
+    <script>
+        const allMentors = [
+            { id: 1, name: 'Sarah Chen', role: 'Product Design Lead', company: 'Google', expertise: ['UX', 'Design Systems', 'User Research'], rating: 4.9, sessions: 156, bio: 'Passionate about creating intuitive user experiences.' },
+            { id: 2, name: 'Michael Park', role: 'Senior Engineer', company: 'Meta', expertise: ['React', 'System Design', 'Performance'], rating: 4.8, sessions: 89, bio: 'Building scalable systems for billions of users.' },
+            { id: 3, name: 'Emily Rodriguez', role: 'VP of Engineering', company: 'Stripe', expertise: ['Leadership', 'Scaling Teams', 'Engineering Culture'], rating: 5.0, sessions: 234, bio: 'Helping engineers grow into leaders.' },
+            { id: 4, name: 'David Kim', role: 'Founder & CEO', company: 'TechStart', expertise: ['Startups', 'Fundraising', 'Product Strategy'], rating: 4.7, sessions: 67, bio: '3x founder with 2 successful exits.' },
+            { id: 5, name: 'Lisa Wang', role: 'Data Science Lead', company: 'Netflix', expertise: ['ML', 'Data Analytics', 'A/B Testing'], rating: 4.9, sessions: 112, bio: 'Making data-driven decisions at scale.' },
+            { id: 6, name: 'James Thompson', role: 'Product Manager', company: 'Airbnb', expertise: ['Product Strategy', 'Growth', 'User Research'], rating: 4.8, sessions: 98, bio: 'Building products people love.' },
+            { id: 7, name: 'Amanda Foster', role: 'Design Director', company: 'Figma', expertise: ['Design Leadership', 'Design Systems', 'Collaboration'], rating: 4.9, sessions: 145, bio: 'Empowering design teams to do their best work.' },
+            { id: 8, name: 'Robert Chen', role: 'CTO', company: 'ScaleUp', expertise: ['Architecture', 'Team Building', 'Tech Strategy'], rating: 4.6, sessions: 78, bio: 'Scaling engineering teams from 10 to 100.' }
+        ];
+        
+        function renderMentors(mentors) {
+            const grid = document.getElementById('allMentorsGrid');
+            grid.innerHTML = mentors.map(mentor => `
+                <div class="mentor-card" onclick="startChatWith(${mentor.id})">
+                    <div class="mentor-avatar">${mentor.name.charAt(0)}</div>
+                    <div class="mentor-info">
+                        <h3 class="mentor-name">${mentor.name}</h3>
+                        <p class="mentor-title">${mentor.role} at ${mentor.company}</p>
+                        <p style="font-size: 13px; color: var(--text-muted); margin: 8px 0;">${mentor.bio}</p>
+                        <div class="mentor-expertise">
+                            ${mentor.expertise.map(e => `<span class="expertise-tag">${e}</span>`).join('')}
+                        </div>
+                        <div class="mentor-stats">
+                            <span class="rating">⭐ ${mentor.rating}</span>
+                            <span class="sessions">${mentor.sessions} sessions</span>
+                        </div>
+                    </div>
+                    <button class="btn btn-primary btn-sm">Start Chat</button>
+                </div>
+            `).join('');
+        }
+        
+        function filterMentors() {
+            const search = document.getElementById('searchMentors').value.toLowerCase();
+            const expertise = document.getElementById('filterExpertise').value.toLowerCase();
+            
+            let filtered = allMentors;
+            
+            if (search) {
+                filtered = filtered.filter(m => 
+                    m.name.toLowerCase().includes(search) ||
+                    m.expertise.some(e => e.toLowerCase().includes(search)) ||
+                    m.role.toLowerCase().includes(search) ||
+                    m.company.toLowerCase().includes(search)
+                );
+            }
+            
+            if (expertise) {
+                filtered = filtered.filter(m => 
+                    m.expertise.some(e => e.toLowerCase().includes(expertise))
+                );
+            }
+            
+            renderMentors(filtered);
+        }
+        
+        function startChatWith(mentorId) {
+            App.showNotification('Starting chat session...', 'info');
+            setTimeout(() => {
+                window.location.href = `chat.html?mentor=${mentorId}`;
+            }, 1000);
+        }
+        
+        // Initial render
+        renderMentors(allMentors);
+    </script>
+</body>
+</html>
