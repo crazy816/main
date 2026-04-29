@@ -38,59 +38,6 @@ A fully interactive, production-ready professional mentorship platform for conne
 - **Google Fonts** - Inter font family
 - **LocalStorage** - Data persistence
 
-## 🚀 Getting Started
-
-### Quick Start
-```bash
-# Clone or download the project
-cd micro-mentor
-
-# Option 1: Open directly in browser
-open index.html
-
-# Option 2: Use a local server
-python -m http.server 8080
-# Then visit http://localhost:8080
-```
-
-### Deploy to GitHub Pages
-```bash
-# Initialize git
-git init
-
-# Add all files
-git add .
-
-# Commit
-git commit -m "Initial commit - Micro-Mentor platform"
-
-# Add your GitHub repository
-git remote add origin https://github.com/YOUR_USERNAME/micro-mentor.git
-
-# Push to GitHub
-git push -u origin main
-
-# Enable GitHub Pages in repository settings
-# Select "main" branch as source
-```
-
-## 📁 File Structure
-
-```
-micro-mentor/
-├── index.html          # Landing page
-├── signup.html         # Registration page
-├── login.html          # Authentication page
-├── dashboard.html      # Main dashboard
-├── mentors.html        # Mentor discovery
-├── chat.html           # Chat interface
-├── chats.html          # Chat history
-├── profile.html        # User settings
-├── styles.css          # All styles
-├── app.js              # Application logic
-└── README.md           # Documentation
-```
-
 ## 🎨 Design System
 
 ### Colors
@@ -142,11 +89,5 @@ Integrate WebSocket or services like:
 For testing, create an account or use LinkedIn mock login:
 - Any email/password works (6+ characters)
 - LinkedIn button creates a mock user
-
-## 📄 License
-
-MIT License - Free to use for personal and commercial projects.
-
----
 
 Built with ❤️ for professionals seeking growth through mentorship.
